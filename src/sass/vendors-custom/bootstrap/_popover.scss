@@ -1,0 +1,25 @@
+/*------------------------------------*\ 
+    #VENDORS-CUSTOM:BOOTSTRAP:POPOVER
+\*------------------------------------*/
+
+
+// I've tried getting habitica-markdown to render markdown text after a popover
+// is opened, but either I'm having a hard time or it's just not possible, I'm
+// not sure which. So instead, I have to do the habitica-markdown rendering
+// when the popover contents for each task is created, before any of them are
+// opened. This seems to work ok, but the popover title is a different story.
+// Typically, the title is added via the title HTML attribute, or as part of a
+// popover options object. In either case, it'd basically mean putting the task
+// title in an HTML attribute. This hasn't been a problem in the past, but
+// doing habitica-markdown rendering on the title and then putting it into an
+// HTML attribute seems to cause problems. So instead, I'm changing the popover
+// template to forget about the title, and I'm putting .popover-header (which
+// is what the title would go in) in .popover-body instead of outside of it,
+// and doing the habitica-markdown rendering on the title in the same place as
+// the rest of the popover contents. Phew, that was a long explanation!
+
+.popover-body .popover-header {
+    margin-top: -$popover-body-padding-y;
+    margin-right: -$popover-body-padding-x;
+    margin-left: -$popover-body-padding-x;
+}

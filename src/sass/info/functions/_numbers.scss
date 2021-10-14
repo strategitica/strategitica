@@ -1,0 +1,78 @@
+// ------------------------------------ \\
+// #BASE:FUNCTIONS:NUMBERS
+// ------------------------------------ //
+
+
+////
+/// @author iymeko, aka misscurmudgeon
+////
+
+/// @author Pelle Wessman (with minor modifications by iymeko, aka misscurmudgeon)
+/// @link https://gist.github.com/voxpelli/6304812 Source of this function
+/// @param {number} $num
+/// @param {number} $n [2]
+/// @param {number} $prec [12]
+
+@function nth-root($num, $n: 2, $prec: 12) {
+    // From: http://rosettacode.org/wiki/Nth_root#JavaScript
+    $x: 1;
+
+    @for $i from 0 through $prec {
+        $x: 1 / $n * (($n - 1) * $x + ($num / pow($x, $n - 1)));
+    }
+
+    @return $x;
+}
+
+
+/// Given two numbers, returns the greatest common divisor
+/// @author Pelle Wessman (with minor modifications by iymeko, aka misscurmudgeon)
+/// @link https://gist.github.com/voxpelli/6304812 Source of this function
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#abs-instance_method SassScript abs($number) instance method
+/// @param {number} $a
+/// @param {number} $b
+
+@function gcd($a, $b) {
+    @if ($b != 0) {
+        @return gcd($b, $a % $b);
+    }
+    @else {
+        @return abs($a);
+    }
+}
+
+
+/// Handles decimal exponents by trying to convert them into a fraction and
+/// then use a nth-root-algorithm for parts of the calculation
+/// @author Pelle Wessman (with minor modifications by iymeko, aka misscurmudgeon)
+/// @link https://gist.github.com/voxpelli/6304812 Source of this function
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#floor-instance_method SassScript floor($number) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#round-instance_method SassScript round($number) instance method
+/// @param {number} $base
+/// @param {number} $exponent
+/// @param {number} $prec [12]
+
+@function pow($base, $exponent, $prec: 12) {
+    @if (floor($exponent) != $exponent) {
+        $prec2: pow(10, $prec);
+        $exponent: round($exponent * $prec2);
+        $denominator: gcd($exponent, $prec2);
+
+        @return nth-root(pow($base, $exponent / $denominator), $prec2 / $denominator, $prec);
+    }
+
+    $value: $base;
+
+    @if $exponent > 1 {
+        @for $i from 2 through $exponent {
+            $value: $value * $base;
+        }
+    }
+    @else if $exponent < 1 {
+        @for $i from 0 through (-$exponent) {
+            $value: $value / $base;
+        }
+    }
+
+    @return $value;
+}

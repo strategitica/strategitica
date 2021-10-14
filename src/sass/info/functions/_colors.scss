@@ -1,0 +1,206 @@
+// ------------------------------------ \\
+// BASE:FUNCTIONS:COLORS
+// ------------------------------------ //
+
+
+////
+/// @author iymeko, aka misscurmudgeon
+////
+
+/// Gets the luminance of a color.
+/// @author Pelle Wessman (with minor modifications by iymeko, aka misscurmudgeon)
+/// @link https://gist.github.com/voxpelli/6304812 Source of this function
+/// @link https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js Where the author adapted this function from
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef Luminance formula source
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#red-instance_method SassScript red($color) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#green-instance_method SassScript green($color) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#blue-instance_method SassScript blue($color) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#nth-instance_method SassScript nth($list, $n) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#if-instance_method SassScript if($condition, $if-true, $if-false) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#append-instance_method SassScript append($list, $val, $separator:auto) instance method
+/// @param {color} $color - The color to get the luminance for
+
+@function luminance($color) {
+    $rgba: red($color), green($color), blue($color);
+    $rgba2: ();
+
+    @for $i from 1 through 3 {
+        $rgb: nth($rgba, $i);
+        $rgb: $rgb / 255;
+
+        $rgb: if($rgb < .03928, $rgb / 12.92, pow(($rgb + .055) / 1.055, 2.4));
+
+        $rgba2: append($rgba2, $rgb);
+    }
+
+    @return .2126 * nth($rgba2, 1) + .7152 * nth($rgba2, 2) + .0722 * nth($rgba2, 3);
+}
+
+
+/// Returns the contrast ratio of two colors. The Web Content Accessibility
+/// Guidelines state that the contrast ratio between foreground images/text and
+/// a background should be at least 4.5:1 (3:1 for larger text) for level AA,
+/// and 7:1 (4.5:1 for larger text) for level AAA.
+/// @author Pelle Wessman (with minor modifications by iymeko, aka misscurmudgeon)
+/// @link https://gist.github.com/voxpelli/6304812 Source of this function
+/// @link https://github.com/LeaVerou/contrast-ratio/blob/gh-pages/color.js Where the author adapted this function from
+/// @link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast About the Web Content Accessibility Guidelines' contrast minimum
+/// @link http://www.w3.org/TR/2008/REC-WCAG20-20081211/#contrast-ratiodef Contrast formula source
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#round-instance_method SassScript round($number) instance method
+/// @param {color} $color1 - The first color to compare
+/// @param {color} $color2 - The second color to compare
+
+@function contrast-ratio($color1, $color2) {
+    $luminance1: luminance($color1) + .05;
+    $luminance2: luminance($color2) + .05;
+    $ratio: $luminance1 / $luminance2;
+
+    @if $luminance2 > $luminance1 {
+        $ratio: 1 / $ratio;
+    }
+
+    $ratio: round($ratio * 10) / 10;
+
+    @return $ratio;
+}
+
+
+/// Gets the brightness of a given color
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#type_of-instance_method SassScript type-of($value) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#red-instance_method SassScript red($color) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#green-instance_method SassScript green($color) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#blue-instance_method SassScript blue($color) instance method
+/// @param {color} $color - The color to get the brightness value for
+/// @return {color} The given color's brightness between 0% (black) and 100% (white)
+
+@function brightness($color) {
+    @if type-of($color) != color {
+        @error "$color must be a color ('#{$color}' is a #{type-of($color)}).";
+        @return $color;
+    }
+    @else {
+        @return ((red($color) * .299) + (green($color) * .587) + (blue($color) * .114)) / 255 * 100%;
+    }
+}
+
+
+/// Given a color, chooses one of two colors by figuring out which of the two
+/// contrasts most with the first color.
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#type_of-instance_method SassScript type-of($value) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#if-instance_method SassScript if($condition, $if-true, $if-false) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#abs-instance_method SassScript abs($number) instance method
+/// @param {color} $color - The color to compare to
+/// @param {color} $dark-option [#000] - The darker option to compare $color to
+/// @param {color} $light-option [#fff] - The lighter option to compare $color to
+/// @return {color | null} If $color is null or not a color, returns null; otherwise, returns either $dark-option or $light-option, whichever contrasts $color most
+
+@function contrast-color($color, $dark-option: #000, $light-option: #fff) {
+    $all-valid: true;
+
+    @if not type-of($color) {
+        $all-valid: false;
+        
+        @error "$color cannot be null.";
+        @return null;
+    }
+    @else if type-of($color) != color {
+        @error "$color must be a color (#{$color} is a #{type-of($color)}).";
+        $all-valid: false;
+
+        @return null;
+    }
+    @if $all-valid {
+        $color-brightness: brightness($color);
+        $dark-option-brightness: brightness($dark-option);
+        $light-option-brightness: brightness($light-option);
+
+        @return if(abs($color-brightness - $light-option-brightness) > abs($color-brightness - $dark-option-brightness), $light-option, $dark-option);
+    }
+}
+
+
+/// Given two colors, this function tries to darken or lighten the first color
+/// more and more until it's contrasting enough (according to WCAG) with the
+/// second color. If the colors are contrasting enough already, the first color
+/// is returned as-is. If a compliant version of a color can't be found, this
+/// function will throw an error. Follow instructions in the error to try to
+/// fix this. This is more common if you're going for AAA compliance, and while
+/// AAA compliance is a great thing to strive for, it's not always feasible or
+/// even possible.
+/// @link https://www.w3.org/TR/2008/REC-WCAG20-20081211/#visual-audio-contrast-contrast About the Web Content Accessibility Guidelines' contrast minimum
+/// @link https://www.w3.org/TR/UNDERSTANDING-WCAG20/conformance.html#uc-conformance-requirements-head Understanding Conformance Requirements
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#if-instance_method SassScript if($condition, $if-true, $if-false) instance method
+/// @link http://sass-lang.com/documentation/Sass/Script/Functions.html#mix-instance_method SassScript mix($color1, $color2, [$weight]) instance method
+/// @param {color} $color1 - The color to potentially darken/lighten
+/// @param {color} $color2 - The color to compare the first color to (which won't be changed)
+/// @param {boolean} $large-text [false] - Set to true to use WCAG's contrast ratio rules for large text, which are a little looser. Text is generally considered "large" if it's larger than 24px, or if it's bold and larger than 18.66px.
+/// @param {number} $increment [5%] - The increment for lightening/darkening $color1. For example, if set to 5%, $color1 will be tested for contrast as-is, then at 5% darker/lighter, then at 10%, then 15%, etc. Cannot be greater than 100%. This can be useful if you want to get a variety of compliant text colors on the same background, or a variety of compliant backgrounds for the same text color.
+/// @param {boolean} $wcag-aaa [false] - Set to true to be compliant with WCAG level AAA instead of just level AA
+/// @example scss - Get a text color that is contrasting enough for a given background color
+///     $example-bgcolor: white;
+///     $example-text: yellow; // notoriously hard to read on a white background
+///     .example {
+///         background: $example-bgcolor;
+///         color: color-accessible($example-text, $example-bgcolor); // #737300, totally readable on a white background
+///     }
+/// @example scss - Get a background color that is contrasting enough for a given text color
+///     $example-bgcolor: white;
+///     $example-text: yellow; // notoriously hard to read on a white background
+///     .example {
+///         color: $example-text;
+///         background: color-accessible($example-bgcolor, $example-text); // #666, which yellow text is totally readable on
+///     }
+/// @example scss - Get a text color for large text that is contrasting enough for a given background color
+///     $example-bgcolor: white;
+///     $example-text: yellow; // notoriously hard to read on a white background
+///     .example {
+///         background: $example-bgcolor;
+///         color: color-accessible($example-text, $example-bgcolor, true); // #8c8c00, totally readable on a white background
+///     }
+
+@function color-accessible($color1, $color2, $large-text: false, $increment: 5%, $wcag-aaa: false) {
+    $threshold: if($large-text == true, if($wcag-aaa == true, 4.5, 3), if($wcag-aaa == true, 7, 4.5));
+    $color1-new: $color1;
+    $percent: 0%;
+    $color-found: false;
+
+    @if $increment > 100% {
+        @warn "$increment should be less than or equal to 100%. It has been set to 100%.";
+        $increment: 100%;
+    }
+
+    @while $color-found == false and $percent <= 100% {
+        $lighter: mix(#fff, $color1, $percent);
+        $darker: mix(#000, $color1, $percent);
+        $darker-ratio: contrast-ratio($color2, $darker);
+        $lighter-ratio: contrast-ratio($color2, $lighter);
+
+        @if ($lighter-ratio > $darker-ratio) {
+            @if ($lighter-ratio > $threshold) {
+                $color1-new: $lighter;
+                $color-found: true;
+            }
+        }
+        @else {
+            @if ($darker-ratio > $threshold) {
+                $color1-new: $darker;
+                $color-found: true;
+            }
+        }
+
+        $percent: $percent + $increment;
+    }
+
+    @if $color-found == false {
+        @error "A compliant version of #{$color1} to go with #{$color2} could not be found. Consider " + if($wcag-aaa == true, "using level AA compliance instead of level AAA, or ", "") + "changing one or both color parameters.";
+    }
+
+    @return $color1-new;
+}
+
+/// Just a slightly more shorthand version of the color-accessibility mixin for
+/// WCAG level AAA compliance (instead of just WCAG AA).
+
+@function color-accessible-aaa($color1, $color2, $large-text: false, $increment: 5%) {
+    @return color-accessible($color1, $color2, $large-text, $increment, true);
+}

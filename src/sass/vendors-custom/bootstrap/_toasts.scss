@@ -1,0 +1,39 @@
+/*------------------------------------*\ 
+    #VENDORS-CUSTOM:BOOTSTRAP:TOASTS
+\*------------------------------------*/
+
+
+.toasts {
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    .toast {
+        margin: floor($grid-gutter-width / 2);
+        @include clearfix;
+    }
+}
+
+@each $color, $value in $theme-colors {
+    $context-background: theme-color-level($color, $alert-bg-level);
+    $context-color: if(not $toast-color, $body-color, $toast-color);
+    $context-header-color: if(not $toast-header-color, $body-color, $toast-header-color);
+
+    .toast-#{$color} {
+        color: color-accessible($context-color, $context-background);
+        background-color: $context-background;
+        border-color: theme-color-level($color, $alert-border-level);
+
+        .toast-header {
+            color: color-accessible($context-header-color, $context-background);
+            background-color: transparent;
+            border-color: theme-color-level($color, $alert-border-level);
+        }
+
+        .close {
+            &, &:hover {
+                color: color-accessible(if(not $close-color, $body-color, $close-color), $context-background);
+            }
+        }
+    }
+}

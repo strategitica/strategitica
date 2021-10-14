@@ -1,0 +1,55 @@
+/*------------------------------------*\ 
+    #LAYOUT:HEADER
+\*------------------------------------*/
+
+
+$header-bg: $brand-teal-dark;
+$header-progress-bg: mix(#000, $header-bg, 25%);
+$header-progress-text: color-accessible(contrast-color($header-progress-bg), $header-progress-bg);
+
+.header {
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    z-index: $zindex-fixed;
+    padding: .5rem 0 0;
+    margin-bottom: floor($grid-gutter-width / 2);
+    background-color: $header-bg;
+    color: color-accessible(contrast-color($header-bg), $header-bg);
+
+    .text-muted {
+        color: color-accessible($text-muted, $header-bg) !important;
+    }
+
+    .progress {
+        background-color: $header-progress-bg;
+    }
+
+    .progress-bar {
+        color: $header-progress-text;
+
+        &.bg-habitica-health {
+            background-color: color-accessible($color-habitica-health, $header-progress-text) !important;
+        }
+
+        &.bg-habitica-experience {
+            background-color: color-accessible($color-habitica-experience, $header-progress-text) !important;
+        }
+
+        &.bg-habitica-mana {
+            background-color: color-accessible($color-habitica-mana, $header-progress-text) !important;
+        }
+    }
+}
+
+.header-logo {
+    display: inline-block;
+    width: 25px;
+    vertical-align: top;
+
+    @include media-breakpoint-up(sm) {
+        width: auto;
+        height: 40px;
+    }
+}

@@ -1,0 +1,20 @@
+/*------------------------------------*\ 
+    #VENDORS-CUSTOM:BOOTSTRAP:PROGRESS
+\*------------------------------------*/
+
+
+// Bootstrap applied overflow: hidden to .progress-bar because of this issue:
+// https://github.com/twbs/bootstrap/issues/29622 Maybe this fix satisfies some
+// people, but for me it causes an issue: When .progress-bar is small (i.e.
+// whatever it's showing is a low percentage of a whole), with overflow:
+// hidden, the text inside .progress-bar (which, in Strategitica, shows
+// [current amount] / [maximum amount] for health, experience and mana) gets
+// cut off. I don't want it to get cut off just because .progress-bar is
+// small--I want people to see exactly how much they have of whatever resource
+// it is. Anyway, the issue in that Github link applies to IE. Microsoft's
+// support for IE is going away, and therefore I see no reason to support it
+// anymore myself. So, I'm reversing this change here.
+
+.progress-bar {
+    overflow: visible;
+}

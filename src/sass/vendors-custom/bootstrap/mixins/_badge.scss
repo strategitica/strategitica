@@ -1,0 +1,13 @@
+// ------------------------------------ \\
+// #VENDORS-CUSTOM:BOOTSTRAP:MIXINS:BADGE
+// ------------------------------------ //
+
+
+@mixin badge-difficulty-variant($bg) {
+    @include badge-variant($bg);
+    border-color: mix(#000, $bg, 20%);
+
+    &:hover, &:focus {
+        outline-color: mix(#000, $bg, 20%);
+    }
+}

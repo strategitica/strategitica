@@ -1,0 +1,30 @@
+/*------------------------------------*\ 
+    #UTILS:TYPE
+\*------------------------------------*/
+
+
+@each $class-name, $display-name, $color in $colors-brand {
+    .text-#{$class-name} {
+        color: $color !important;
+    }
+}
+
+@each $class-name, $display-name, $color in $colors-symbolic {
+    .text-#{$class-name} {
+        color: $color !important;
+    }
+}
+
+@each $class-name, $display-name, $color in $colors-grey {
+    .text-#{$class-name} {
+        color: $color !important;
+    }
+}
+
+.font-primary {
+    font-family: $font-primary !important;
+}
+
+.font-secondary {
+    font-family: $font-secondary !important;
+}

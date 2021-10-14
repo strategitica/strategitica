@@ -1,0 +1,84 @@
+/*------------------------------------*\ 
+    #MODULES:CALENDAR
+\*------------------------------------*/
+
+
+$calendar-day-width: percentage(1 / 7);
+$calendar-view-breakpoint: md;
+
+.calendar-label-month {
+    flex: 0 0 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.calendar-label-week {
+    flex: 0 0 $calendar-day-width;
+    text-align: center;
+    overflow: hidden;
+}
+
+.calendar-label-day {
+    font-weight: bold;
+}
+
+.calendar-label-difficulty {
+    float: right;
+    font-size: 75%;
+}
+
+@include media-breakpoint-up($calendar-view-breakpoint) {
+    .calendar-week {
+        display: flex;
+        flex-wrap: nowrap;
+    }
+}
+
+.calendar-week:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+
+.calendar-day {
+    flex: 0 0 $calendar-day-width;
+    border-top: 1px solid $table-border-color;
+    overflow: hidden;
+
+    &:before, &:after {
+        content: "";
+        display: block;
+        height: 1rem;
+
+        @include media-breakpoint-up($calendar-view-breakpoint) {
+            content: normal;
+        }
+    }
+}
+
+.calendar-day-weekend {
+    .calendar-label-day {
+        color: color-accessible($brand-orange-medium, #fff);
+    }
+}
+
+.calendar-day-alternate {
+    background: $table-accent-bg;
+}
+
+.calendar-day-past {
+    border-color: mix(#fff, $table-border-color);
+
+    .calendar-label-day {
+        color: $text-muted;
+    }
+}
+
+@include media-breakpoint-up($calendar-view-breakpoint) {
+    @for $i from 1 through 6 {
+        .calendar-day-offset#{$i} {
+            margin-left: ($calendar-day-width * $i);
+        }
+    }
+}

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="Description" content="Strategitica" />
+    <title>Strategitica</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="img/icons/apple-touch-icon.png?v=NmaomBXnME">
+    <link rel="icon" type="image/png" sizes="32x32" href="img/icons/favicon-32x32.png?v=NmaomBXnME">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/icons/favicon-16x16.png?v=NmaomBXnME">
+    <link rel="manifest" href="img/icons/site.webmanifest?v=NmaomBXnME">
+    <link rel="mask-icon" href="img/icons/safari-pinned-tab.svg?v=NmaomBXnME" color="#248189">
+    <link rel="shortcut icon" href="img/icons/favicon.ico?v=NmaomBXnME">
+    <meta name="msapplication-TileColor" content="#248189">
+    <meta name="msapplication-config" content="img/icons/browserconfig.xml?v=NmaomBXnME">
+    <meta name="theme-color" content="#248189">
+</head>
+
+<body>
+    <header class="header header-js">
+        <div class="container-fluid px-2">
+            <div class="row mx-n2 align-items-center">
+                <div class="col-auto px-2">
+                    <img src="img/logo-white.png" class="header-logo" alt="Strategitica logo">
+                </div>
+                <div class="col px-2" id="strategitica-stats"></div>
+                <div class="col-auto px-2">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-outline-light" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#" id="strategitica-add-daily"><i class="fas fa-plus"></i> Add a Daily</a>
+                            <a class="dropdown-item" href="#" id="strategitica-refresh"><i class="fas fa-redo"></i> Refresh</a>
+                            <a class="dropdown-item" href="#" id="strategitica-tavern-change1"></a>
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#modal-about"><i class="fas fa-info-circle"></i> About Strategitica</a>
+                            <a class="dropdown-item d-none" href="#" id="strategitica-logs" data-toggle="modal" data-target="#modal-logs"><i class="fas fa-bug"></i> Logs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="strategitica-tavern-status" class="mt-2"></div>
+    </header>
+    <div class="container-fluid">
+        <div class="calendar" id="strategitica-calendar"></div>
+    </div>
+
+    <div id="strategitica-descriptions" class="d-none"></div>
+
+    <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="modal-login-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-login-label"><img src="img/logo.png" class="mr-3" alt="Strategitica logo" height="25"> Welcome to Strategitica!</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Enter your Habitica user ID and API token to continue. Both can be found <a href="https://habitica.com/user/settings/api" target="_blank" class="card-link">here</a>.</p>
+
+                    <form id="strategitica-login" method="POST">
+                        <div class="row mb-3">
+                            <label for="user-id" class="col-sm-3 col-form-label">User ID</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="userId" id="user-id">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="api-token" class="col-sm-3 col-form-label">API Token</label>
+                            <div class="col-sm-9">
+                                <input type="password" class="form-control" name="apiToken" id="api-token">
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Let's Go!"></input>
+                    </form>
+
+                    <div id="strategitica-login-progress" class="progress mt-2 d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">Loading...</div>
+                    </div>
+                    <div class="mt-2 strategitica-logs-js"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-task" tabindex="-1" role="dialog" aria-labelledby="modal-task-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title task-param-static-js" id="modal-task-label"></h5>
+                    <div class="form-group task-param-editable-js d-none">
+                        <label for="task-text" class="sr-only">Title</label>
+                        <input type="text" class="form-control form-control-lg" id="task-text" value="" placeholder="Task title">
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Static items here -->
+                    <div class="task-param-static-js">
+                        <div id="task-notes-static"></div>
+                        <ul class="list-unstyled" id="task-checklist-static"></ul>
+                        <table class="table table-sm table-borderless">
+                            <tbody>
+                                <tr>
+                                    <th>Type</th>
+                                    <td id="task-type-static"></td>
+                                </tr>
+                                <tr>
+                                    <th>Difficulty</th>
+                                    <td id="task-difficulty-static"></td>
+                                </tr>
+                                <tr id="task-frequency-static-container" class="d-none">
+                                    <th>Frequency</th>
+                                    <td id="task-frequency-static"></td>
+                                </tr>
+                                <tr>
+                                    <th>Time of day</th>
+                                    <td id="task-time-static"></td>
+                                </tr>
+                                <tr id="task-duration-static-container" class="d-none">
+                                    <th>Duration</th>
+                                    <td id="task-duration-static"></td>
+                                </tr>
+                                <tr>
+                                    <th>Tags</th>
+                                    <td id="task-tags-static"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Editable items here -->
+                    <div class="task-param-editable-js d-none">
+                        <input type="hidden" id="task-type" value="">
+                        <div class="form-group">
+                            <label for="task-notes">Notes</label>
+                            <textarea class="form-control form-control-sm" id="task-notes" rows="3" placeholder="Add notes"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="task-difficulty">Difficulty</label>
+                            <select class="form-control form-control-sm" name="task-difficulty" id="task-difficulty">
+                                <option value="0.1">&#9733; Trivial</option>
+                                <option value="1">&#9733;&#9733; Easy</option>
+                                <option value="1.5">&#9733;&#9733;&#9733; Medium</option>
+                                <option value="2">&#9733;&#9733;&#9733;&#9733; Hard</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="task-startdate-container">
+                            <label for="task-startdate">Start date</label>
+                            <input type="date" class="form-control form-control-sm" id="task-startdate" value="" />
+                        </div>
+                        <div class="form-group" id="task-date-container">
+                            <label for="task-date">Due date</label>
+                            <input type="date" class="form-control form-control-sm" id="task-date" value=""></input>
+                        </div>
+                        <div class="form-group" id="task-frequency-container">
+                            <label for="task-frequency">Repeats</label>
+                            <select class="form-control form-control-sm" name="task-frequency" id="task-frequency">';
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly</option>
+                                <option value="monthly">Monthly</option>
+                                <option value="yearly">Yearly</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="task-everyx-container">
+                            <label for="task-everyx">Repeat every</label>
+                            <div class="input-group input-group-sm">
+                                <input type="number" class="form-control" name="task-everyx" id="task-everyx" value="" min="0" max="9999" aria-describedby="task-everyx-addon">
+                                <div class="input-group-append">
+                                    <span class="input-group-text" id="task-everyx-addon"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group task-param-repeat-js" id="task-repeat-container">
+                            <label>Repeat on</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-su" value="true">
+                                    <label class="form-check-label" for="task-repeat-su">Su</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-m" value="true">
+                                    <label class="form-check-label" for="task-repeat-m">Mo</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-t" value="true">
+                                    <label class="form-check-label" for="task-repeat-t">Tu</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-w" value="true">
+                                    <label class="form-check-label" for="task-repeat-w">We</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-th" value="true">
+                                    <label class="form-check-label" for="task-repeat-th">Th</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-f" value="true">
+                                    <label class="form-check-label" for="task-repeat-f">Fr</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="task-repeat-s" value="true">
+                                    <label class="form-check-label" for="task-repeat-s">Sa</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" id="task-daysweeksofmonth-container">
+                            <label>Repeat on</label>
+                            <div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="task-dayofweekmonth" id="task-dayofmonth" value="true">
+                                    <label class="form-check-label" for="task-dayofmonth">This day of the month</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="task-dayofweekmonth" id="task-weekofmonth" value="true">
+                                    <label class="form-check-label" for="task-weekofmonth">This week of the month</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Tags</label>
+                            <div class="row" id="task-tags-container"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div id="strategitica-task-progress" class="progress flex-grow-1 mb-2 d-none">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">Loading...</div>
+                    </div>
+                    <div class="btn-group btn-group-sm float-right" id="task-controls1" role="group" aria-label="Task Actions">
+                        <button type="button" class="btn btn-success" id="task-complete" data-taskid=""><i class="fas fa-check"></i> Complete</button>
+                        <button type="button" class="btn btn-primary" id="task-edit"><i class="fas fa-pencil-alt"></i> Edit</button>
+                        <button type="button" class="btn btn-danger" id="task-delete" data-taskid=""><i class="fas fa-trash"></i> Delete</button>
+                    </div>
+                    <div class="btn-group btn-group-sm float-right d-none" id="task-controls2" role="group" aria-label="Task Editing Actions">
+                        <button type="button" class="btn btn-success" id="task-save" data-taskid="" data-new=""><i class="fas fa-save"></i> Save</button>
+                        <button type="button" class="btn btn-danger" id="task-edit-cancel"><i class="fas fa-times"></i> Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-about" tabindex="-1" role="dialog" aria-labelledby="modal-about-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-about-label">About Strategitica</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <h2 class="h6">Task Key</h2>
+                    <ul>
+                        <li>Task background color indicates difficulty:
+                            <span class="badge badge-difficulty1">Trivial</span>
+                            <span class="badge badge-difficulty2">Easy</span>
+                            <span class="badge badge-difficulty3">Medium</span>
+                            <span class="badge badge-difficulty4">Hard</span>
+                        </li>
+                        <li>The color on the left side of a task indicates its "value", <a href="https://habitica.fandom.com/wiki/Task_Value#Task_Colors" target="_blank">just like it does with Habitica.</a></li>
+                        <!-- <li><span class="badge badge-pill badge-light"><i class="fas fa-star" aria-hidden="true"></i>#</span> - This is the difficulty rating for the day. It's just a sum of the difficulty of each task that's still due on that day.</li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-logs" tabindex="-1" role="dialog" aria-labelledby="modal-logs-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-logs-label">Logs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body strategitica-logs-js"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="strategitica-logs-clear"><i class="fas fa-ban"></i> Clear Logs</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal-loading" tabindex="-1" role="dialog" aria-labelledby="modal-logs-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-logs-label">Logs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body strategitica-logs-js"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toasts toasts-js" aria-live="polite" aria-atomic="true">
+        <div class="toast toast-success fade hide" id="strategitica-toast-success" role="status" aria-live="polite" data-autohide="true" data-delay="5000">
+            <div class="toast-header">
+                <strong class="mr-auto">
+                    <span class="toast-title-js mr-2">Strategitica</span>
+                </strong>
+                <small>Just now</small>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body toast-body-js"></div>
+        </div>
+        <div class="toast toast-info fade hide" id="strategitica-toast-info" role="status" aria-live="polite" data-autohide="false">
+            <div class="toast-header">
+                <strong class="mr-auto">
+                    <span class="toast-title-js mr-2">Strategitica</span>
+                </strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body toast-body-js"></div>
+        </div>
+        <div class="toast toast-danger fade hide" id="strategitica-toast-error" role="alert" aria-live="assertive" data-autohide="false">
+            <div class="toast-header">
+                <strong class="mr-auto">
+                    <span class="toast-title-js mr-2">Strategitica</span>
+                </strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="toast-body toast-body-js"></div>
+        </div>
+    </div>
+</body>
+
+</html>

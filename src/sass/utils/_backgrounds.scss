@@ -1,0 +1,22 @@
+﻿/*------------------------------------*\ 
+    #UTILS:BACKGROUNDS
+\*------------------------------------*/
+
+
+@each $class-name, $display-name, $color in $colors-brand {
+    .bg-#{$class-name} {
+        background-color: $color !important;
+    }
+}
+
+@each $class-name, $display-name, $color in $colors-symbolic {
+    .bg-#{$class-name} {
+        background-color: $color !important;
+    }
+}
+
+@each $class-name, $display-name, $color in $colors-grey {
+    .bg-#{$class-name} {
+        background-color: $color !important;
+    }
+}

@@ -1,0 +1,178 @@
+// ------------------------------------ \\
+// #INFO:VARIABLES:COLORS
+// ------------------------------------ //
+
+
+// REMEMBER:
+// 1.   Any color values here that also exist outside of Sass/CSS (e.g.
+//      JavaScript, inlined styles for emails, etc.) will not be affected by
+//      changes made in this file, so it's a good idea to search the site's
+//      non-Sass and non-CSS files for any hex/rgb/etc. values here before
+//      changing these variables' values.
+// 2.   Each set of variables here has a corresponding list. These lists
+//      should contain sub-lists for each color containing 1) a string to help
+//      in naming utility classes, 2) a string with the color's "name", and 3)
+//      the color variable itself. For example:
+//      
+//      $colors-brand: (
+//          (brand-red, "Red", $brand-red),
+//          (brand-blue, "Blue", $brand-blue)
+//      );
+//      
+//      In this example, brand-red and brand-blue can be used to name utility
+//      classes such as .bg-brand-red and .text-brand-blue, and "Red" and
+//      "Blue" can be used as the color "names" in places like the style
+//      guide's swatches.
+//      
+//      So, when adding or removing variables here, be sure to also add or
+//      remove them from that variable group's corresponding list. Also, if
+//      you're adding a new "group" of color variables (and therefore adding a
+//      new list), remember to also set up swatches and utility classes for
+//      those colors.
+
+
+// ---------- Branding Colors ---------- //
+
+// All these colors basically come from Habitica's official color palette. The
+// purples can only be used to a very limited extent. See 
+// https://habitica.fandom.com/wiki/Guidance_for_Comrades for more info.
+
+$brand-habitica-purple50:   #36205d;
+$brand-habitica-purple100:  #432874;
+$brand-habitica-purple200:  #4f2a93;
+$brand-habitica-purple300:  #6133b4;
+$brand-habitica-purple400:  #925cf3;
+$brand-habitica-purple500:  #bda8ff;
+$brand-habitica-purple600:  #d5c8ff;
+$brand-habitica-blue1:      #033f5e;
+$brand-habitica-blue10:     #2995cd;
+$brand-habitica-blue50:     #46a7d9;
+$brand-habitica-blue100:    #50b5e9;
+$brand-habitica-blue500:    #a9dcf6;
+$brand-habitica-red1:       #6c0406;
+$brand-habitica-red10:      #f23035;
+$brand-habitica-red50:      #f74e52;
+$brand-habitica-red100:     #ff6165;
+$brand-habitica-red500:     #ffb6b8;
+$brand-habitica-yellow1:    #794b00;
+$brand-habitica-yellow5:    #ee9109;
+$brand-habitica-yellow10:   #ffa624;
+$brand-habitica-yellow50:   #ffb445;
+$brand-habitica-yellow100:  #ffbe5d;
+$brand-habitica-yellow500:  #fedead;
+$brand-habitica-maroon10:   #b01515;
+$brand-habitica-maroon50:   #c92b2b;
+$brand-habitica-maroon100:  #de3f3f;
+$brand-habitica-maroon500:  #f19595;
+$brand-habitica-orange1:    #7f3300;
+$brand-habitica-orange10:   #f47825;
+$brand-habitica-orange50:   #fa8537;
+$brand-habitica-orange100:  #ff944c;
+$brand-habitica-orange500:  #ffc8a7;
+$brand-habitica-teal1:      #005158;
+$brand-habitica-teal10:     #26a0ab;
+$brand-habitica-teal50:     #34b5c1;
+$brand-habitica-teal100:    #3bcad7;
+$brand-habitica-teal500:    #8eedf6;
+$brand-habitica-green1:     #005737;
+$brand-habitica-green10:    #1ca372;
+$brand-habitica-green50:    #20b780;
+$brand-habitica-green100:   #24cc8f;
+$brand-habitica-green500:   #77f4c7;
+
+$brand-teal-dark:           $brand-habitica-teal1;
+$brand-teal-medium:         darken(saturate($brand-habitica-teal50, .83), 14.12); // #248189
+$brand-teal-light:          $brand-habitica-teal500;
+$brand-teal-lighter:        lighten(saturate(adjust-hue($brand-teal-light, 1), 1.42), 12.16); // #c7f6fb
+$brand-orange-dark:         $brand-habitica-orange1;
+$brand-orange-medium:       $brand-habitica-orange50;
+$brand-orange-light:        $brand-habitica-orange500;
+
+$colors-brand: (
+    (brand-teal-dark, "Teal (Dark)", $brand-teal-dark),
+    (brand-teal-medium, "Teal (Medium)", $brand-teal-medium),
+    (brand-teal-light, "Teal (Light)", $brand-teal-light),
+    (brand-orange-dark, "Orange (Dark)", $brand-orange-dark),
+    (brand-orange-medium, "Orange (Medium)", $brand-orange-medium),
+    (brand-orange-light, "Orange (Light)", $brand-orange-light)
+);
+
+
+// ----------- Symbolic Colors ---------- //
+
+// These variables are meant to be used to signify different things:
+// 1.   Habitica task value colors (see https://habitica.fandom.com/wiki/Task_Value#Task_Colors)
+// 2.   Habitica stat bar colors
+
+$color-habitica-value1:     $brand-habitica-blue100; // [1]
+$color-habitica-value2:     $brand-habitica-teal100; // [1]
+$color-habitica-value3:     $brand-habitica-green100; // [1]
+$color-habitica-value4:     $brand-habitica-yellow100; // [1]
+$color-habitica-value5:     $brand-habitica-orange100; // [1]
+$color-habitica-value6:     $brand-habitica-red100; // [1]
+$color-habitica-value7:     $brand-habitica-maroon100; // [1]
+$color-habitica-health:     $brand-habitica-red50; // [2]
+$color-habitica-experience: $brand-habitica-yellow100; // [2]
+$color-habitica-mana:       $brand-habitica-blue100; // [2]
+
+$colors-symbolic: (
+    (habitica-value1, "Habitica Value 1", $color-habitica-value1),
+    (habitica-value2, "Habitica Value 2", $color-habitica-value2),
+    (habitica-value3, "Habitica Value 3", $color-habitica-value3),
+    (habitica-value4, "Habitica Value 4", $color-habitica-value4),
+    (habitica-value5, "Habitica Value 5", $color-habitica-value5),
+    (habitica-value6, "Habitica Value 6", $color-habitica-value6),
+    (habitica-value7, "Habitica Value 7", $color-habitica-value7),
+    (habitica-health, "Habitica Health", $color-habitica-health),
+    (habitica-experience, "Habitica Experience", $color-habitica-experience),
+    (habitica-mana, "Habitica Mana", $color-habitica-mana)
+);
+
+
+// ------------ Grey Colors ----------- //
+
+$grey-obsidian:     #151515;
+$grey-soot:         #1e1e1e;
+$grey-black-smoke:  #2e2e2e;
+$grey-caviar:       #333333;
+$grey-lead:         #3a3a3a;
+$grey-charcoal:     #444444;
+$grey-mortar:       #555555;
+$grey-evil:         #666666;
+$grey-nickel:       #707070;
+$grey-storm:        #777777;
+$grey-elephant:     #888888;
+$grey-weimaraner:   #999999;
+$grey-scream:       #aaaaaa;
+$grey-silver:       #c2c2c2;
+$grey-sidewalk:     #cecece;
+$grey-fog:          #d7d7d7;
+$grey-ash:          #dddddd;
+$grey-platinum:     #e6e6e6;
+$grey-white-smoke:  #f0f0f0;
+$grey-alabaster:    #f8f8f8;
+$grey-snow:         #fbfbfb;
+
+$colors-grey: (
+    (grey-obsidian, "Obsidian", $grey-obsidian),
+    (grey-soot, "Soot", $grey-soot), 
+    (grey-black-smoke, "Black Smoke", $grey-black-smoke), 
+    (grey-caviar, "Caviar", $grey-caviar), 
+    (grey-lead, "Lead", $grey-lead), 
+    (grey-charcoal, "Charcoal", $grey-charcoal),
+    (grey-mortar, "Mortar", $grey-mortar), 
+    (grey-evil, "Evil Grey", $grey-evil), 
+    (grey-nickel, "Nickel", $grey-nickel),
+    (grey-storm, "Storm Grey", $grey-storm), 
+    (grey-elephant, "Elephant Grey", $grey-elephant), 
+    (grey-weimaraner, "Weimaraner Grey", $grey-weimaraner), 
+    (grey-scream, "Screaming Grey", $grey-scream), 
+    (grey-silver, "Silver", $grey-silver), 
+    (grey-sidewalk, "Sidewalk Grey", $grey-sidewalk), 
+    (grey-fog, "Fog", $grey-fog), 
+    (grey-ash, "Ash", $grey-ash), 
+    (grey-platinum, "Platinum", $grey-platinum), 
+    (grey-white-smoke, "White Smoke", $grey-white-smoke), 
+    (grey-alabaster, "Alabaster", $grey-alabaster), 
+    (grey-snow, "Snow", $grey-snow)
+);
