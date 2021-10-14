@@ -1,4 +1,4 @@
-# <img align="left" height="50" src="https://raw.githubusercontent.com/iymeko/strategitica/main/dist/img/logo.png"> Strategitica
+# <img align="left" height="50" src="https://raw.githubusercontent.com/strategitica/strategitica/main/dist/img/logo.png"> Strategitica
 
 ## A calendar view for [Habitica](https://habitica.com/), by [@misscurmudgeon](https://habitica.com/profile/88aa06bb-ec69-43d8-b58a-e6df4aa608ac)
 
@@ -6,7 +6,7 @@
 
 ## How to Use
 
-Just go to https://iymeko.github.io/strategitica/ and enter your Habitica user ID and API token. Both can be found at https://habitica.com/user/settings/api. You may also go to https://iymeko.github.io/strategitica/?id=[YOUR-HABITICA-USER-ID] to pre-fill your user ID, if this saves time for you. After entering your info, you should see your tasks in calendar form for the next 90 days.
+Just go to https://strategitica.github.io/strategitica/ and enter your Habitica user ID and API token. Both can be found at https://habitica.com/user/settings/api. You may also go to https://strategitica.github.io/strategitica/?id=[YOUR-HABITICA-USER-ID] to pre-fill your user ID, if this saves time for you. After entering your info, you should see your tasks in calendar form for the next 90 days.
 
 **Note:** Once your ID/token are entered, if you think Strategitica might not be up-to-date (for example, maybe you left Strategitica's page alone for a day, or you made changes on habitica.com or the Habitica app after using Strategitica, etc.), **you can refresh your data by clicking Refresh in the menu**. This saves you from having to refresh the page and re-enter your ID/token every time you want up-to-date info. The page does data refreshes itself immediately after you make changes using Strategitica, but it can't detect changes made outside of Strategitica.
 
@@ -50,7 +50,7 @@ Add this to a daily that's really just a one-time task, and Strategitica will kn
 
 ### Custom Days Limit ###
 
-If you want to show a different number of days in the future than the default of 90 days, you can add days=[desired number of days] to the Strategitica URL. For example, https://iymeko.github.io/strategitica/?days=30 will show 30 days in the future. This was implemented to help users who have a lot of tasks, which can cause Strategitica to take too long to load. The maximum number of days allowed is 180.
+If you want to show a different number of days in the future than the default of 90 days, you can add days=[desired number of days] to the Strategitica URL. For example, https://strategitica.github.io/strategitica/?days=30 will show 30 days in the future. This was implemented to help users who have a lot of tasks, which can cause Strategitica to take too long to load. The maximum number of days allowed is 180.
 
 ## Notable Limitations/Issues ##
 
@@ -68,6 +68,6 @@ If you want to show a different number of days in the future than the default of
 
 If you're having a problem with Strategitica and want to report it, please do this:
 
-1. Go to https://iymeko.github.io/strategitica/?logs=true. This enables more verbose logging of what's going on with Strategitica than just errors.
+1. Go to https://strategitica.github.io/strategitica/?logs=true. This enables more verbose logging of what's going on with Strategitica than just errors.
 2. Do whatever you were doing that caused an problem for you. You should be able to see the logs by clicking Logs in the menu, or in the login window if you're not able to get past entering your user ID and API token.
-3. Describe your issue to me and include the full contents of the logs. You can do this by either [creating an issue on GitHub](https://github.com/iymeko/strategitica/issues/new/choose) (this is the preferred option), or by sending me a message in Habitica. Here's [a link to my Habitica profile](https://habitica.com/profile/88aa06bb-ec69-43d8-b58a-e6df4aa608ac) if you choose to go that route.
+3. Describe your issue to me and include the full contents of the logs. You can do this by either [creating an issue on GitHub](https://github.com/strategitica/strategitica/issues/new) (this is the preferred option), or by sending me a message in Habitica. Here's [a link to my Habitica profile](https://habitica.com/profile/88aa06bb-ec69-43d8-b58a-e6df4aa608ac) if you choose to go that route.
