@@ -1,0 +1,52 @@
+{
+    "type": "module",
+    "name": "strategitica",
+    "version": "1.4.1",
+    "description": "Displays Habitica tasks in calendar format, along with some other helpful info and a sleep toggle.",
+    "private": true,
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "webpack --watch",
+        "build": "webpack",
+        "publish": "node src/gh-pages.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/iymeko/strategitica.git"
+    },
+    "keywords": [
+        "Habitica",
+        "calendar"
+    ],
+    "author": "Erica Peers",
+    "license": "GPL-3.0",
+    "bugs": {
+        "url": "https://github.com/iymeko/strategitica/issues"
+    },
+    "homepage": "https://github.com/iymeko/strategitica#readme",
+    "devDependencies": {
+        "@fortawesome/fontawesome-free": "^5.15.2",
+        "@popperjs/core": "^2.7.0",
+        "autoprefixer": "^10.2.4",
+        "bootstrap": "^4.6.0",
+        "clean-webpack-plugin": "^3.0.0",
+        "copy-webpack-plugin": "^7.0.0",
+        "css-loader": "^5.0.2",
+        "gh-pages": "^3.1.0",
+        "habitica-markdown": "^3.0.0",
+        "html-webpack-plugin": "^5.1.0",
+        "jquery": "^3.5.1",
+        "postcss-loader": "^5.0.0",
+        "rrule": "^2.6.8",
+        "sass": "^1.32.8",
+        "sass-loader": "^11.0.1",
+        "style-loader": "^2.0.0",
+        "webpack": "^5.22.0",
+        "webpack-cli": "^4.5.0"
+    },
+    "dependencies": {},
+    "browserslist": [
+        "defaults",
+        "iOS >= 5"
+    ]
+}
