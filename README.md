@@ -54,11 +54,11 @@ If you want to show a different number of days in the future than the default of
 
 ## Notable Limitations/Issues ##
 
-1. [Strategitica doesn't run cron.](https://github.com/iymeko/strategitica/issues/12) I may implement this one day, but right now, if you start your day and cron hasn't run yet, you'll see yesterday's tasks as today's tasks in your calendar. So, use habitica.com or the Habitica app to run cron.
+1. [Strategitica doesn't run cron.](https://github.com/strategitica/strategitica/issues/11) I may implement this one day, but right now, if you start your day and cron hasn't run yet, you'll see yesterday's tasks as today's tasks in your calendar. So, use habitica.com or the Habitica app to run cron.
 
-2. [You can't edit task checkboxes yet.](https://github.com/iymeko/strategitica/issues/8) You can check and uncheck existing checkboxes, you just can't create new ones or edit/remove existing ones. Sorry, I just haven't gotten around to this yet.
+2. [You can't edit task checkboxes yet.](https://github.com/strategitica/strategitica/issues/8) You can check and uncheck existing checkboxes, you just can't create new ones or edit/remove existing ones. Sorry, I just haven't gotten around to this yet.
 
-3. [Strategitica wasn't made with non-midnight cron in mind.](https://github.com/iymeko/strategitica/issues/28) I'm still thinking of how to handle this.
+3. [Strategitica wasn't made with non-midnight cron in mind.](https://github.com/strategitica/strategitica/issues/20) I'm still thinking of how to handle this.
 
 4. Strategitica does its very best to put all your recurring tasks in the right place on your calendar. However, if a daily has a due date in the past, there's a chance it'll get placed at a date slightly off from when it should actually appear. This is because when a due date is in the past, it uses Habitica's API to find the next due date, and sometimes that date is wrong. I couldn't tell you why because I didn't make the API. For example, I set a daily's date on April 11th, 2020, and it's due every 12 months on that day of the month. In February 2021, I should see that task show up on April 11th, 2021. For some reason though, the Habitica API comes back with April 10th, 2021 as the earliest "next due" date. So basically, Strategitica sees April 10th, 2021 as the first date for this task, and it also sees that it should show up on April 11th, 2021 as well, so it adds both dates to the calendar. I'm not sure if there's much I can do about this.
 
