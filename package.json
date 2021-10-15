@@ -12,7 +12,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/iymeko/strategitica.git"
+        "url": "git+https://github.com/strategitica/strategitica.git"
     },
     "keywords": [
         "Habitica",
@@ -21,9 +21,9 @@
     "author": "Erica Peers",
     "license": "GPL-3.0",
     "bugs": {
-        "url": "https://github.com/iymeko/strategitica/issues"
+        "url": "https://github.com/strategitica/strategitica/issues"
     },
-    "homepage": "https://github.com/iymeko/strategitica#readme",
+    "homepage": "https://github.com/strategitica/strategitica#readme",
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.15.2",
         "@popperjs/core": "^2.7.0",
