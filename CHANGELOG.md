@@ -4,7 +4,7 @@
 [//]: # (Backward compatible new feature            1.1.0)
 [//]: # (Changes that break backward compatibility  2.0.0)
 
-### [Strategitica](https://github.com/iymeko/strategitica) Changelog
+### [Strategitica](https://github.com/strategitica/strategitica) Changelog
 
 ## 1.4.1 (11 May, 2021)
 
