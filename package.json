@@ -37,7 +37,7 @@
         "html-webpack-plugin": "^5.1.0",
         "jquery": "^3.5.1",
         "postcss-loader": "^5.0.0",
-        "rrule": "^2.6.8",
+        "rrule": "^2.7.1",
         "sass": "^1.32.8",
         "sass-loader": "^11.0.1",
         "style-loader": "^2.0.0",
